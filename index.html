@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="de">
+<!DOCTYPE html><html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,201 +20,199 @@
     <div id="game"></div>
   </div>
   <script>
-    const game = document.getElementById('game');
+    const game = document.getElementById('game');const screens = [
+  {
+    text: 'Du hast heute einiges aus unserer Vergangenheit wieder erlebt, wir haben gelacht, und uns an einiges zurück erinnert. Jetzt steht uns ein weiterer grosser Schritt bevor. Doch zuerst musst du beweisen, wie gut du uns wirklich kennst...'
+  },
+  {
+    question: 'Welche dieser Aussagen würde am ehesten in einem eurer Gespräche auftauchen?',
+    options: [
+      { text: 'Beziehungsorientierung bedeutet, rücksicht nehmen auf die Bedürfnisse aller Beteiligten, nicht nur die des Kindes.', correct: true },
+      { text: 'Wenn man lange genug kämpft, bekommt man, was man will.', correct: false },
+      { text: 'Zucker macht Kinder glücklich.', correct: false }
+    ],
+    comment: 'Ich bin so froh, haben wir so ähnliche Vorstellungen was Erziehung und ein Kind zu begleiten bedeuted.'
+  },
+  {
+    question: 'Ein Kind wird im Kindergarten unfair behandelt. Was tut ihr?',
+    options: [
+      { text: 'Sofort schimpfen.', correct: false },
+      { text: 'Zuerst zuhören, dann vermitteln.', correct: true },
+      { text: 'Ignorieren – ist nicht euer Problem.', correct: false }
+    ],
+    comment: 'Empathisch wie eh und je– so wie wir das lieben.'
+  },
+  {
+    type: 'match',
+    instruction: 'Ordne diese Begriffe den passenden Kategorien zu:',
+    pairs: {
+      'Salsa': 'Tanzen',
+      'Take on me': 'gemeinsam Musik machen',
+      'Grigri': 'Klettern'
+    },
+    comment: 'LOVE – Dinge, die wir lieben, zu zweit zu machen!'
+  },
+  {
+    question: 'Welche 3 Zutaten sind in einem typischen veganen Frühstück von euch?',
+    options: [
+      { text: 'Haferflocken', correct: true },
+      { text: 'Lachs', correct: false },
+      { text: 'Beeren', correct: true },
+      { text: 'Chiasamen', correct: true },
+      { text: 'Kuhmilch', correct: false },
+      { text: 'Croissant', correct: false }
+    ],
+    comment: 'Schön, dass mir deheime euse chlini vegani Safespace hend.'
+  },
+  {
+    type: 'order',
+    instruction: 'Ordne diese Ereignisse chronologisch:',
+    sequence: [
+      'Treffen in der Bar',
+      'Minigolf-Date',
+      'Kuss auf dem Sofa',
+      'Surfcamp',
+      'Ägypten-Urlaub',
+      'Von unserem kleinen Wunder erfahren'
+    ],
+    correctOrder: [0, 1, 2, 3, 4, 5],
+    comment: 'Guapis – Unser Weg vom ersten Date bis zu unserem kleinen Wunder.'
+  },
+  {
+    text: 'Du hast alles richtig erkannt. Es gibt nichts mehr zu beweisen.'
+  },
+  {
+    text: 'Nur noch eins zu fragen... 💍',
+    final: true
+  }
+];
 
-    const screens = [
-      {
-        text: 'Du hast viel erlebt, viel gelacht, viel geliebt. Jetzt steht die letzte grosse Aufgabe bevor. Doch zuerst musst du beweisen, wie gut du uns wirklich kennst...'
-      },
-      {
-        question: 'Welche dieser Aussagen würde am ehesten in einem eurer Gespräche auftauchen?',
-        options: [
-          { text: 'Beziehungsorientierung bedeutet, rücksicht nehmen auf die Bedürfnisse aller Beteiligten, nicht nur die des Kindes.', correct: true },
-          { text: 'Wenn man lange genug kämpft, bekommt man, was man will.', correct: false },
-          { text: 'Zucker macht Kinder glücklich.', correct: false }
-        ],
-        comment: 'Ich bin so froh, haben wir so ähnliche Vorstellungen was Ertiehung und ein Kind begleiten bedeuted.'
-      },
-      {
-        question: 'Ein Kind wird im Kindergarten unfair behandelt. Was tut ihr?',
-        options: [
-          { text: 'Sofort schimpfen.', correct: false },
-          { text: 'Zuerst zuhören, dann vermitteln.', correct: true },
-          { text: 'Ignorieren – ist nicht euer Problem.', correct: false }
-        ],
-        comment: 'Empathie first – so wie wir das lieben.'
-      },
-      {
-        type: 'match',
-        instruction: 'Ordne diese Begriffe den passenden Kategorien zu:',
-        pairs: {
-          'Salsa': 'Tanzen',
-          'Take on me': 'Musik',
-          'Bar in Olten': 'Sisieme'
-        },
-        comment: 'LOVE – weil alles irgendwie genau das ist!'
-      },
-      {
-        question: 'Welche 3 Zutaten sind in einem typischen veganen Frühstück von euch?',
-        options: [
-          { text: 'Haferflocken', correct: true },
-          { text: 'Lachs', correct: false },
-          { text: 'Beeren', correct: true },
-          { text: 'Chiasamen', correct: true },
-          { text: 'Kuhmilch', correct: false },
-          { text: 'Croissant', correct: false }
-        ],
-        comment: 'Schön, dass mir deheime euse chlini vegani Safespace hend.'
-      },
-      {
-        type: 'order',
-        instruction: 'Ordne diese Ereignisse chronologisch:',
-        sequence: [
-          'Treffen in der Bar',
-          'Minigolf-Date',
-          'Kuss auf dem Sofa',
-          'Surfcamp',
-          'Ägypten-Urlaub',
-          'Von unserem kleinen Wunder erfahren'
-        ],
-        correctOrder: [0, 1, 2, 3, 4, 5],
-        comment: 'Guapis – vom ersten Date bis zum Wunder.'
-      },
-      {
-        text: 'Du hast alles erkannt, erspielt und gespürt. Es gibt nichts mehr zu beweisen.'
-      },
-      {
-        text: 'Nur noch eins zu fragen... 💍',
-        final: true
-      }
-    ];
+let current = 0;
 
-    let current = 0;
+function renderScreen() {
+  const data = screens[current];
+  game.innerHTML = '';
+  const div = document.createElement('div');
 
-    function renderScreen() {
-      const data = screens[current];
-      game.innerHTML = '';
-      const div = document.createElement('div');
+  if (data.question) {
+    const h2 = document.createElement('h2');
+    h2.textContent = data.question;
+    div.appendChild(h2);
 
-      if (data.question) {
-        const h2 = document.createElement('h2');
-        h2.textContent = data.question;
-        div.appendChild(h2);
-
-        data.options.forEach((opt, i) => {
-          const btn = document.createElement('button');
-          btn.textContent = opt.text;
-          btn.onclick = () => {
-            const feedback = document.createElement('p');
-            feedback.textContent = opt.correct ? data.comment : 'Nicht ganz... versuch weiter!';
-            div.appendChild(feedback);
-            btn.disabled = true;
-            const next = document.createElement('button');
-            next.textContent = 'Weiter';
-            next.onclick = () => {
-              current++;
-              renderScreen();
-            };
-            div.appendChild(next);
-          };
-          div.appendChild(btn);
-        });
-      } else if (data.type === 'match') {
-        const instr = document.createElement('p');
-        instr.textContent = data.instruction;
-        div.appendChild(instr);
-
-        const entries = Object.entries(data.pairs);
-        let matched = 0;
-        entries.forEach(([key, val]) => {
-          const label = document.createElement('label');
-          label.textContent = `Wozu passt "${key}"?`;
-          const select = document.createElement('select');
-          ['Tanzen', 'Musik', 'Sisieme'].forEach(opt => {
-            const option = document.createElement('option');
-            option.value = opt;
-            option.textContent = opt;
-            select.appendChild(option);
-          });
-          div.appendChild(label);
-          div.appendChild(select);
-          div.appendChild(document.createElement('br'));
-        });
-        const submit = document.createElement('button');
-        submit.textContent = 'Überprüfen';
-        submit.onclick = () => {
-          const selects = div.querySelectorAll('select');
-          let correct = true;
-          selects.forEach((sel, idx) => {
-            if (sel.value !== entries[idx][1]) correct = false;
-          });
-          const feedback = document.createElement('p');
-          feedback.textContent = correct ? data.comment : 'Nicht ganz... probier es nochmals.';
-          div.appendChild(feedback);
-          if (correct) {
-            const next = document.createElement('button');
-            next.textContent = 'Weiter';
-            next.onclick = () => {
-              current++;
-              renderScreen();
-            };
-            div.appendChild(next);
-          }
-        };
-        div.appendChild(submit);
-      } else if (data.type === 'order') {
-        const instr = document.createElement('p');
-        instr.textContent = data.instruction;
-        div.appendChild(instr);
-        const list = document.createElement('ul');
-        list.style.listStyle = 'none';
-        list.style.padding = 0;
-        data.sequence.forEach((item, i) => {
-          const li = document.createElement('li');
-          li.textContent = `${i + 1}. ${item}`;
-          list.appendChild(li);
-        });
-        div.appendChild(list);
-
-        const input = document.createElement('input');
-        input.placeholder = 'Gib die richtige Reihenfolge als Zahlen ein (z. B. 1,2,3...)';
-        div.appendChild(input);
-        const submit = document.createElement('button');
-        submit.textContent = 'Überprüfen';
-        submit.onclick = () => {
-          const val = input.value.split(',').map(v => parseInt(v.trim()) - 1);
-          const correct = val.length === data.correctOrder.length && val.every((v, i) => v === data.correctOrder[i]);
-          const feedback = document.createElement('p');
-          feedback.textContent = correct ? data.comment : 'Fast... probier die Reihenfolge nochmal.';
-          div.appendChild(feedback);
-          if (correct) {
-            const next = document.createElement('button');
-            next.textContent = 'Weiter';
-            next.onclick = () => {
-              current++;
-              renderScreen();
-            };
-            div.appendChild(next);
-          }
-        };
-        div.appendChild(submit);
-      } else if (data.text) {
-        const p = document.createElement('p');
-        p.textContent = data.text;
-        div.appendChild(p);
+    data.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = opt.text;
+      btn.onclick = () => {
+        const feedback = document.createElement('p');
+        feedback.textContent = opt.correct ? data.comment : 'Nicht ganz... versuch weiter!';
+        div.appendChild(feedback);
+        btn.disabled = true;
         const next = document.createElement('button');
-        next.textContent = data.final ? 'Antwort anzeigen' : 'Weiter';
+        next.textContent = 'Weiter';
+        next.onclick = () => {
+          current++;
+          renderScreen();
+        };
+        div.appendChild(next);
+      };
+      div.appendChild(btn);
+    });
+  } else if (data.type === 'match') {
+    const instr = document.createElement('p');
+    instr.textContent = data.instruction;
+    div.appendChild(instr);
+
+    const entries = Object.entries(data.pairs);
+    entries.forEach(([key, val]) => {
+      const label = document.createElement('label');
+      label.textContent = `Wozu passt "${key}"?`;
+      const select = document.createElement('select');
+      ['Tanzen', 'Musik', 'Sisieme'].forEach(opt => {
+        const option = document.createElement('option');
+        option.value = opt;
+        option.textContent = opt;
+        select.appendChild(option);
+      });
+      div.appendChild(label);
+      div.appendChild(select);
+      div.appendChild(document.createElement('br'));
+    });
+    const submit = document.createElement('button');
+    submit.textContent = 'Überprüfen';
+    submit.onclick = () => {
+      const selects = div.querySelectorAll('select');
+      let correct = true;
+      selects.forEach((sel, idx) => {
+        if (sel.value !== entries[idx][1]) correct = false;
+      });
+      const feedback = document.createElement('p');
+      feedback.textContent = correct ? data.comment : 'Nicht ganz... probier es nochmals.';
+      div.appendChild(feedback);
+      if (correct) {
+        const next = document.createElement('button');
+        next.textContent = 'Weiter';
         next.onclick = () => {
           current++;
           renderScreen();
         };
         div.appendChild(next);
       }
+    };
+    div.appendChild(submit);
+  } else if (data.type === 'order') {
+    const instr = document.createElement('p');
+    instr.textContent = data.instruction;
+    div.appendChild(instr);
+    const list = document.createElement('ul');
+    list.style.listStyle = 'none';
+    list.style.padding = 0;
+    data.sequence.forEach((item, i) => {
+      const li = document.createElement('li');
+      li.textContent = `${i + 1}. ${item}`;
+      list.appendChild(li);
+    });
+    div.appendChild(list);
 
-      game.appendChild(div);
-    }
+    const input = document.createElement('input');
+    input.placeholder = 'Gib die richtige Reihenfolge als Zahlen ein (z. B. 1,2,3...)';
+    div.appendChild(input);
+    const submit = document.createElement('button');
+    submit.textContent = 'Überprüfen';
+    submit.onclick = () => {
+      const val = input.value.split(',').map(v => parseInt(v.trim()) - 1);
+      const correct = val.length === data.correctOrder.length && val.every((v, i) => v === data.correctOrder[i]);
+      const feedback = document.createElement('p');
+      feedback.textContent = correct ? data.comment : 'Fast... probier die Reihenfolge nochmal.';
+      div.appendChild(feedback);
+      if (correct) {
+        const next = document.createElement('button');
+        next.textContent = 'Weiter';
+        next.onclick = () => {
+          current++;
+          renderScreen();
+        };
+        div.appendChild(next);
+      }
+    };
+    div.appendChild(submit);
+  } else if (data.text) {
+    const p = document.createElement('p');
+    p.textContent = data.text;
+    div.appendChild(p);
+    const next = document.createElement('button');
+    next.textContent = data.final ? 'Antwort anzeigen' : 'Weiter';
+    next.onclick = () => {
+      current++;
+      renderScreen();
+    };
+    div.appendChild(next);
+  }
 
-    renderScreen();
+  game.appendChild(div);
+}
+
+renderScreen();
+
   </script>
 </body>
 </html>
