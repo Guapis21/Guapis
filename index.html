@@ -2,161 +2,220 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Guapis in Love</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guapis in Love</title>
   <style>
-    body { font-family: sans-serif; padding: 1rem; background:#f9f9f9; color:#333; }
-    h1, h2 { text-align:center; }
-    .hidden { display:none; }
-    .button { display:block; margin:1rem auto; padding:0.5rem 1rem; font-size:1.1rem; }
-    .feedback { margin-top:0.5rem; }
+    body { font-family: sans-serif; margin: 0; padding: 2rem; background-color: #fff0f5; color: #333; }
+    .container { max-width: 600px; margin: auto; }
+    h1, h2 { text-align: center; }
+    .question, .result, .next { margin-top: 2rem; }
+    button { padding: 1rem; background-color: #ff69b4; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 1rem; }
+    .hidden { display: none; }
+    .card { border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; cursor: pointer; }
+    .selected { background-color: #ffe4e1; }
   </style>
 </head>
 <body>
-
-  <div id="screen-intro">
+  <div class="container">
     <h1>Guapis in Love</h1>
-    <p>Du hast viel erlebt, viel gelacht, viel geliebt. Jetzt steht die letzte grosse Aufgabe bevor. Doch zuerst musst du beweisen, wie gut du uns wirklich kennst...</p>
-    <button class="button" onclick="nextScreen()">Los geht’s!</button>
+    <div id="game"></div>
   </div>
-
-  <!-- Rätsel 1 -->
-  <div id="screen-1" class="hidden">
-    <h2>Rätsel 1 – Pädagogik</h2>
-    <p>Welche dieser Aussagen würde am ehesten in einem eurer Gespräche auftauchen?</p>
-    <label><input type="radio" name="q1" value="A"> A) Beziehungsorientierung bedeutet, rücksicht nehmen auf die Bedürfnisse aller Beteiligten, nicht nur die des Kindes.</label><br>
-    <label><input type="radio" name="q1" value="B"> B) Wenn man lange genug kämpft, bekommt man, was man will.</label><br>
-    <label><input type="radio" name="q1" value="C"> C) Zucker macht Kinder glücklich.</label>
-    <div class="feedback" id="fb1"></div>
-    <button class="button" onclick="check1()">Weiter</button>
-  </div>
-
-  <!-- Rätsel 2 -->
-  <div id="screen-2" class="hidden">
-    <h2>Rätsel 2 – Psychologie & Gerechtigkeit</h2>
-    <p>Ein Kind wird im Kindergarten unfair behandelt. Was tut ihr?</p>
-    <label><input type="radio" name="q2" value="A"> A) Sofort schimpfen.</label><br>
-    <label><input type="radio" name="q2" value="B"> B) Zuerst zuhören, dann vermitteln.</label><br>
-    <label><input type="radio" name="q2" value="C"> C) Ignorieren – ist nicht euer Problem.</label>
-    <div class="feedback" id="fb2"></div>
-    <button class="button" onclick="check2()">Weiter</button>
-  </div>
-
-  <!-- Rätsel 3 -->
-  <div id="screen-3" class="hidden">
-    <h2>Rätsel 3 – Musik & Tanz</h2>
-    <p>Ordne zu:</p>
-    <label><input type="radio" name="q3" value="1"> Salsa → Tanzen</label><br>
-    <label><input type="radio" name="q3" value="2"> Take on me → Musik</label><br>
-    <label><input type="radio" name="q3" value="3"> Bar in Olten → Sisieme</label>
-    <div class="feedback" id="fb3"></div>
-    <button class="button" onclick="check3()">Weiter</button>
-  </div>
-
-  <!-- Rätsel 4 -->
-  <div id="screen-4" class="hidden">
-    <h2>Rätsel 4 – Vegane Ernährung</h2>
-    <p>Welche 3 Zutaten sind in eurem Frühstück?</p>
-    <label><input type="checkbox" name="q4" value="Haferflocken"> Haferflocken</label><br>
-    <label><input type="checkbox" name="q4" value="Lachs"> Lachs</label><br>
-    <label><input type="checkbox" name="q4" value="Beeren"> Beeren</label><br>
-    <label><input type="checkbox" name="q4" value="Chiasamen"> Chiasamen</label><br>
-    <label><input type="checkbox" name="q4" value="Kuhmilch"> Kuhmilch</label><br>
-    <label><input type="checkbox" name="q4" value="Croissant"> Croissant</label>
-    <div class="feedback" id="fb4"></div>
-    <button class="button" onclick="check4()">Weiter</button>
-  </div>
-
-  <!-- Rätsel 5 -->
-  <div id="screen-5" class="hidden">
-    <h2>Finale – Liebesrätsel</h2>
-    <p>Ordne die Ereignisse chronologisch:</p>
-    <select id="r5a"><option value="">–</option><option>Urlaub in Ägypten</option><option>Kuss auf dem Sofa</option><option>Minigolf-Date</option><option>Treffen in der Bar</option><option>Ferien Surfcamp</option><option>Von unserem kleinen Wunder erfahren</option></select><br>
-    <select id="r5b"><option value="">–</option><option>Urlaub in Ägypten</option><option>Kuss auf dem Sofa</option><option>Minigolf-Date</option><option>Treffen in der Bar</option><option>Ferien Surfcamp</option><option>Von unserem kleinen Wunder erfahren</option></select><br>
-    <select id="r5c"><option value="">–</option><option>Urlaub in Ägypten</option><option>Kuss auf dem Sofa</option><option>Minigolf-Date</option><option>Treffen in der Bar</option><option>Ferien Surfcamp</option><option>Von unserem kleinen Wunder erfahren</option></select><br>
-    <select id="r5d"><option value="">–</option><option>Urlaub in Ägypten</option><option>Kuss auf dem Sofa</option><option>Minigolf-Date</option><option>Treffen in der Bar</option><option>Ferien Surfcamp</option><option>Von unserem kleinen Wunder erfahren</option></select><br>
-    <select id="r5e"><option value="">–</option><option>Urlaub in Ägypten</option><option>Kuss auf dem Sofa</option><option>Minigolf-Date</option><option>Treffen in der Bar</option><option>Ferien Surfcamp</option><option>Von unserem kleinen Wunder erfahren</option></select><br>
-    <select id="r5f"><option value="">–</option><option>Urlaub in Ägypten</option><option>Kuss auf dem Sofa</option><option>Minigolf-Date</option><option>Treffen in der Bar</option><option>Ferien Surfcamp</option><option>Von unserem kleinen Wunder erfahren</option></select>
-    <div class="feedback" id="fb5"></div>
-    <button class="button" onclick="check5()">Weiter</button>
-  </div>
-
-  <!-- Abschluss -->
-  <div id="screen-end" class="hidden">
-    <h2>Herzlichen Glückwunsch 💛</h2>
-    <p>Du hast alles erkannt, erspielt und gespürt. Es gibt nichts mehr zu beweisen.</p>
-    <p>Nur noch eins zu fragen...</p>
-    <button class="button" onclick="showProposal()">Weiter</button>
-    <div id="proposal" class="hidden">
-      <h2>Wetsch du mich hürate?</h2>
-    </div>
-  </div>
-
   <script>
-    let step = 0;
-    function nextScreen() {
-      document.getElementById('screen-intro').classList.add('hidden');
-      showScreen(1);
-    }
-    function showScreen(n) {
-      step = n;
-      document.getElementById('screen-'+n).classList.remove('hidden');
-    }
-    function check1(){
-      const ans = document.querySelector('input[name="q1"]:checked');
-      const fb = document.getElementById('fb1');
-      if(ans && ans.value==='A'){
-        fb.textContent = 'Ja, genau! Ich bin so froh, dass wir so ähnliche Vorstellungen haben.';
-        setTimeout(()=>{ document.getElementById('screen-1').classList.add('hidden'); showScreen(2); }, 1000);
-      } else {
-        fb.textContent = 'Das stimmt so nicht – versuch’s nochmal!';
-      }
-    }
-    function check2(){
-      const ans = document.querySelector('input[name="q2"]:checked');
-      const fb = document.getElementById('fb2');
-      if(ans && ans.value==='B'){
-        fb.textContent = 'Genau – Zuhören und vermitteln das ist unser Weg.';
-        setTimeout(()=>{ document.getElementById('screen-2').classList.add('hidden'); showScreen(3); }, 1000);
-      } else {
-        fb.textContent = 'Das passt nicht ganz – nochmal überlegen!';
-      }
-    }
-    function check3(){
-      const ans = document.querySelector('input[name="q3"]:checked');
-      const fb = document.getElementById('fb3');
-      if(ans && ans.value==='1'){
-        fb.textContent = 'Perfekt! Weiter geht’s.';
-        setTimeout(()=>{ document.getElementById('screen-3').classList.add('hidden'); showScreen(4); }, 1000);
-      } else {
-        fb.textContent = 'Nicht ganz. Versuchs nochmal.';
-      }
-    }
-    function check4(){
-      const checks = Array.from(document.querySelectorAll('input[name="q4"]:checked')).map(c=>c.value);
-      const fb = document.getElementById('fb4');
-      if (checks.includes('Haferflocken') && checks.includes('Beeren') && checks.includes('Chiasamen')) {
-        fb.textContent = 'Genau! Schön, dass mir deheime euse chlini vegani Safespace hend.';
-        setTimeout(()=>{ document.getElementById('screen-4').classList.add('hidden'); showScreen(5); }, 1000);
-      } else {
-        fb.textContent = 'Nicht ganz richtig – denk an unser Frühstück!';
-      }
-    }
-    function check5(){
-      const order = Array.from([1,2,3,4,5,6]).map(i => document.getElementById('r5'+['a','b','c','d','e','f'][i-1]).value);
-      const correct = ['Treffen in der Bar','Minigolf-Date','Kuss auf dem Sofa','Urlaub in Ägypten','Ferien Surfcamp','Von unserem kleinen Wunder erfahren'];
-      const fb = document.getElementById('fb5');
-      if (JSON.stringify(order)===JSON.stringify(correct)){
-        fb.textContent = 'Alles richtig!';
-        setTimeout(()=>{ document.getElementById('screen-5').classList.add('hidden'); showScreen('end'); }, 1000);
-      } else {
-        fb.textContent = 'Die Reihenfolge stimmt (noch) nicht – versuch’s nochmal.';
-      }
-    }
-    function showProposal(){
-      document.getElementById('proposal').classList.remove('hidden');
-    }
-  </script>
+    const game = document.getElementById('game');
 
+    const screens = [
+      {
+        text: 'Du hast viel erlebt, viel gelacht, viel geliebt. Jetzt steht die letzte grosse Aufgabe bevor. Doch zuerst musst du beweisen, wie gut du uns wirklich kennst...'
+      },
+      {
+        question: 'Welche dieser Aussagen würde am ehesten in einem eurer Gespräche auftauchen?',
+        options: [
+          { text: 'Beziehungsorientierung bedeutet, rücksicht nehmen auf die Bedürfnisse aller Beteiligten, nicht nur die des Kindes.', correct: true },
+          { text: 'Wenn man lange genug kämpft, bekommt man, was man will.', correct: false },
+          { text: 'Zucker macht Kinder glücklich.', correct: false }
+        ],
+        comment: 'Ich bin so froh, haben wir so ähnliche Vorstellungen was Ertiehung und ein Kind begleiten bedeuted.'
+      },
+      {
+        question: 'Ein Kind wird im Kindergarten unfair behandelt. Was tut ihr?',
+        options: [
+          { text: 'Sofort schimpfen.', correct: false },
+          { text: 'Zuerst zuhören, dann vermitteln.', correct: true },
+          { text: 'Ignorieren – ist nicht euer Problem.', correct: false }
+        ],
+        comment: 'Empathie first – so wie wir das lieben.'
+      },
+      {
+        type: 'match',
+        instruction: 'Ordne diese Begriffe den passenden Kategorien zu:',
+        pairs: {
+          'Salsa': 'Tanzen',
+          'Take on me': 'Musik',
+          'Bar in Olten': 'Sisieme'
+        },
+        comment: 'LOVE – weil alles irgendwie genau das ist!'
+      },
+      {
+        question: 'Welche 3 Zutaten sind in einem typischen veganen Frühstück von euch?',
+        options: [
+          { text: 'Haferflocken', correct: true },
+          { text: 'Lachs', correct: false },
+          { text: 'Beeren', correct: true },
+          { text: 'Chiasamen', correct: true },
+          { text: 'Kuhmilch', correct: false },
+          { text: 'Croissant', correct: false }
+        ],
+        comment: 'Schön, dass mir deheime euse chlini vegani Safespace hend.'
+      },
+      {
+        type: 'order',
+        instruction: 'Ordne diese Ereignisse chronologisch:',
+        sequence: [
+          'Treffen in der Bar',
+          'Minigolf-Date',
+          'Kuss auf dem Sofa',
+          'Surfcamp',
+          'Ägypten-Urlaub',
+          'Von unserem kleinen Wunder erfahren'
+        ],
+        correctOrder: [0, 1, 2, 3, 4, 5],
+        comment: 'Guapis – vom ersten Date bis zum Wunder.'
+      },
+      {
+        text: 'Du hast alles erkannt, erspielt und gespürt. Es gibt nichts mehr zu beweisen.'
+      },
+      {
+        text: 'Nur noch eins zu fragen... 💍',
+        final: true
+      }
+    ];
+
+    let current = 0;
+
+    function renderScreen() {
+      const data = screens[current];
+      game.innerHTML = '';
+      const div = document.createElement('div');
+
+      if (data.question) {
+        const h2 = document.createElement('h2');
+        h2.textContent = data.question;
+        div.appendChild(h2);
+
+        data.options.forEach((opt, i) => {
+          const btn = document.createElement('button');
+          btn.textContent = opt.text;
+          btn.onclick = () => {
+            const feedback = document.createElement('p');
+            feedback.textContent = opt.correct ? data.comment : 'Nicht ganz... versuch weiter!';
+            div.appendChild(feedback);
+            btn.disabled = true;
+            const next = document.createElement('button');
+            next.textContent = 'Weiter';
+            next.onclick = () => {
+              current++;
+              renderScreen();
+            };
+            div.appendChild(next);
+          };
+          div.appendChild(btn);
+        });
+      } else if (data.type === 'match') {
+        const instr = document.createElement('p');
+        instr.textContent = data.instruction;
+        div.appendChild(instr);
+
+        const entries = Object.entries(data.pairs);
+        let matched = 0;
+        entries.forEach(([key, val]) => {
+          const label = document.createElement('label');
+          label.textContent = `Wozu passt "${key}"?`;
+          const select = document.createElement('select');
+          ['Tanzen', 'Musik', 'Sisieme'].forEach(opt => {
+            const option = document.createElement('option');
+            option.value = opt;
+            option.textContent = opt;
+            select.appendChild(option);
+          });
+          div.appendChild(label);
+          div.appendChild(select);
+          div.appendChild(document.createElement('br'));
+        });
+        const submit = document.createElement('button');
+        submit.textContent = 'Überprüfen';
+        submit.onclick = () => {
+          const selects = div.querySelectorAll('select');
+          let correct = true;
+          selects.forEach((sel, idx) => {
+            if (sel.value !== entries[idx][1]) correct = false;
+          });
+          const feedback = document.createElement('p');
+          feedback.textContent = correct ? data.comment : 'Nicht ganz... probier es nochmals.';
+          div.appendChild(feedback);
+          if (correct) {
+            const next = document.createElement('button');
+            next.textContent = 'Weiter';
+            next.onclick = () => {
+              current++;
+              renderScreen();
+            };
+            div.appendChild(next);
+          }
+        };
+        div.appendChild(submit);
+      } else if (data.type === 'order') {
+        const instr = document.createElement('p');
+        instr.textContent = data.instruction;
+        div.appendChild(instr);
+        const list = document.createElement('ul');
+        list.style.listStyle = 'none';
+        list.style.padding = 0;
+        data.sequence.forEach((item, i) => {
+          const li = document.createElement('li');
+          li.textContent = `${i + 1}. ${item}`;
+          list.appendChild(li);
+        });
+        div.appendChild(list);
+
+        const input = document.createElement('input');
+        input.placeholder = 'Gib die richtige Reihenfolge als Zahlen ein (z. B. 1,2,3...)';
+        div.appendChild(input);
+        const submit = document.createElement('button');
+        submit.textContent = 'Überprüfen';
+        submit.onclick = () => {
+          const val = input.value.split(',').map(v => parseInt(v.trim()) - 1);
+          const correct = val.length === data.correctOrder.length && val.every((v, i) => v === data.correctOrder[i]);
+          const feedback = document.createElement('p');
+          feedback.textContent = correct ? data.comment : 'Fast... probier die Reihenfolge nochmal.';
+          div.appendChild(feedback);
+          if (correct) {
+            const next = document.createElement('button');
+            next.textContent = 'Weiter';
+            next.onclick = () => {
+              current++;
+              renderScreen();
+            };
+            div.appendChild(next);
+          }
+        };
+        div.appendChild(submit);
+      } else if (data.text) {
+        const p = document.createElement('p');
+        p.textContent = data.text;
+        div.appendChild(p);
+        const next = document.createElement('button');
+        next.textContent = data.final ? 'Antwort anzeigen' : 'Weiter';
+        next.onclick = () => {
+          current++;
+          renderScreen();
+        };
+        div.appendChild(next);
+      }
+
+      game.appendChild(div);
+    }
+
+    renderScreen();
+  </script>
 </body>
 </html>
