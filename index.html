@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de"> 
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,8 +11,8 @@
     .question, .result, .next { margin-top: 2rem; }
     button { padding: 1rem; background-color: #ff69b4; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 1rem; }
     .hidden { display: none; }
-    .card { border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; cursor: pointer; }
-    .selected { background-color: #ffe4e1; }
+    label { display: inline-block; margin-top: 0.5rem; }
+    select { margin: 0.5rem 0; }
   </style>
 </head>
 <body>
@@ -20,11 +20,13 @@
     <h1>Guapis in Love</h1>
     <div id="game"></div>
   </div>
+
   <script>
     const game = document.getElementById('game');
+
     const screens = [
       {
-        text: 'Du hast heute einiges aus unserer Vergangenheit wieder erlebt, wir haben gelacht, und uns an einiges zurück erinnert. Jetzt steht uns ein weiterer grosser Schritt bevor. Doch zuerst sollst du beweisen, wie gut du uns wirklich kennst...'
+        text: 'Du hast heute einiges aus unserer Vergangenheit nochmals erlebt, wir haben gelacht, und uns an einiges zurück erinnert. Jetzt steht uns ein weiterer grosser Schritt bevor. Doch zuerst sollst du beweisen, wie gut du uns wirklich kennst...'
       },
       {
         question: 'Welche dieser Aussagen würde am ehesten in einem eurer Gespräche auftauchen?',
@@ -42,7 +44,7 @@
           { text: 'Zuerst zuhören, dann vermitteln.', correct: true },
           { text: 'Ignorieren – ist nicht euer Problem.', correct: false }
         ],
-        comment: 'Empathisch wie eh und je– so wie wir das lieben.'
+        comment: 'Empathisch wie eh und je – so wie wir das lieben.'
       },
       {
         type: 'match',
@@ -77,7 +79,6 @@
           'Urlaub in Ägypten',
           'Von unserem kleinen Wunder erfahren'
         ],
-        correctOrder: [0, 1, 2, 3, 4, 5],
         comment: 'Alles richtig! Vom ersten Treffen bis zu unserem Wunder.'
       },
       {
@@ -96,23 +97,12 @@
       game.innerHTML = '';
       const div = document.createElement('div');
 
-      // Intro / Text-only
-      if (data.text && !data.question && !data.type && !data.final) {
-        const p = document.createElement('p');
-        p.textContent = data.text;
-        div.appendChild(p);
-        const next = document.createElement('button');
-        next.textContent = 'Weiter';
-        next.onclick = () => { current++; renderScreen(); };
-        div.appendChild(next);
-
-      // Multiple Choice
-      } else if (data.question) {
+      if (data.question) {
         const h2 = document.createElement('h2');
         h2.textContent = data.question;
         div.appendChild(h2);
 
-        data.options.forEach((opt) => {
+        data.options.forEach(opt => {
           const btn = document.createElement('button');
           btn.textContent = opt.text;
           btn.onclick = () => {
@@ -120,17 +110,16 @@
             feedback.textContent = opt.correct ? data.comment : 'Nicht ganz... versuch weiter!';
             div.appendChild(feedback);
             btn.disabled = true;
-            if (opt.correct) {
-              const next = document.createElement('button');
-              next.textContent = 'Weiter';
-              next.onclick = () => { current++; renderScreen(); };
-              div.appendChild(next);
-            }
+            const next = document.createElement('button');
+            next.textContent = 'Weiter';
+            next.onclick = () => {
+              current++;
+              renderScreen();
+            };
+            div.appendChild(next);
           };
           div.appendChild(btn);
         });
-
-      // Match (Zuordnung)
       } else if (data.type === 'match') {
         const instr = document.createElement('p');
         instr.textContent = data.instruction;
@@ -139,9 +128,9 @@
         const entries = Object.entries(data.pairs);
         entries.forEach(([key, val]) => {
           const label = document.createElement('label');
-          label.textContent = `Wozu passt "${key}"?`;
+          label.textContent = `Wozu passt "${key}"? `;
           const select = document.createElement('select');
-          ['Tanzen', 'gemeinsam Musik machen', 'Klettern'].forEach(opt => {
+          Object.values(data.pairs).forEach(opt => {
             const option = document.createElement('option');
             option.value = opt;
             option.textContent = opt;
@@ -151,6 +140,7 @@
           div.appendChild(select);
           div.appendChild(document.createElement('br'));
         });
+
         const submit = document.createElement('button');
         submit.textContent = 'Überprüfen';
         submit.onclick = () => {
@@ -165,39 +155,53 @@
           if (correct) {
             const next = document.createElement('button');
             next.textContent = 'Weiter';
-            next.onclick = () => { current++; renderScreen(); };
+            next.onclick = () => {
+              current++;
+              renderScreen();
+            };
             div.appendChild(next);
           }
         };
         div.appendChild(submit);
-
-      // Order (Reihenfolge)
       } else if (data.type === 'order') {
         const instr = document.createElement('p');
         instr.textContent = data.instruction;
         div.appendChild(instr);
 
-        const list = document.createElement('ol');
-        data.sequence.forEach((item, i) => {
-          const li = document.createElement('li');
-          li.textContent = item;
-          list.appendChild(li);
-        });
-        div.appendChild(list);
+        const selects = [];
 
-        const input = document.createElement('input');
-        input.placeholder = 'Reihenfolge eingeben z.B. 1,2,3,4,5,6';
-        div.appendChild(input);
+        for (let i = 0; i < data.sequence.length; i++) {
+          const label = document.createElement('label');
+          label.textContent = `Platz ${i + 1}: `;
+          const select = document.createElement('select');
+
+          const empty = document.createElement('option');
+          empty.value = "";
+          empty.textContent = "–";
+          select.appendChild(empty);
+
+          data.sequence.forEach(opt => {
+            const option = document.createElement('option');
+            option.value = opt;
+            option.textContent = opt;
+            select.appendChild(option);
+          });
+
+          selects.push(select);
+          div.appendChild(label);
+          div.appendChild(select);
+          div.appendChild(document.createElement('br'));
+        }
 
         const submit = document.createElement('button');
         submit.textContent = 'Überprüfen';
         submit.onclick = () => {
-          const val = input.value.split(',').map(v => parseInt(v.trim()) - 1);
-          const correct = val.length === data.correctOrder.length &&
-                          val.every((v,i) => v === data.correctOrder[i]);
+          const chosen = selects.map(sel => sel.value);
+          const correct = JSON.stringify(chosen) === JSON.stringify(data.sequence);
           const feedback = document.createElement('p');
-          feedback.textContent = correct ? data.comment : 'Fast... probier die Reihenfolge nochmal.';
+          feedback.textContent = correct ? data.comment : 'Die Reihenfolge stimmt (noch) nicht – versuch’s nochmal.';
           div.appendChild(feedback);
+
           if (correct) {
             const next = document.createElement('button');
             next.textContent = 'Weiter';
@@ -206,18 +210,23 @@
           }
         };
         div.appendChild(submit);
-
-      // Finale Proposal
-      } else if (data.final) {
+      } else if (data.text) {
         const p = document.createElement('p');
         p.textContent = data.text;
         div.appendChild(p);
-        const btn = document.createElement('button');
-        btn.textContent = 'Weiter';
-        btn.onclick = () => {
-          div.innerHTML = '<h2>Wetsch du mich hürate? 💍</h2>';
+        const next = document.createElement('button');
+        next.textContent = data.final ? 'Antwort anzeigen' : 'Weiter';
+        next.onclick = () => {
+          if (data.final) {
+            const proposal = document.createElement('h2');
+            proposal.textContent = 'Wetsch du mich hürate? 💍';
+            div.appendChild(proposal);
+          } else {
+            current++;
+            renderScreen();
+          }
         };
-        div.appendChild(btn);
+        div.appendChild(next);
       }
 
       game.appendChild(div);
@@ -227,3 +236,4 @@
   </script>
 </body>
 </html>
+
