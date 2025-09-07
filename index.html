@@ -65,27 +65,27 @@
     comment: 'Schön, dass mir deheime euse chlini vegani Safespace hend.'
   },
   {
-    type: 'order',
-    instruction: 'Ordne diese Ereignisse chronologisch:',
-    sequence: [
-      'Treffen in der Bar',
-      'Minigolf-Date',
-      'Kuss auf dem Sofa',
-      'Surfcamp',
-      'Ägypten-Urlaub',
-      'Von unserem kleinen Wunder erfahren'
-    ],
-    correctOrder: [0, 1, 2, 3, 4, 5],
-    comment: 'Guapis – Unser Weg vom ersten Date bis zu unserem kleinen Wunder.'
-  },
-  {
-    text: 'Du hast alles richtig erkannt. Es gibt nichts mehr zu beweisen.'
-  },
-  {
-    text: 'Nur noch eins zu fragen... 💍',
-    final: true
-  }
-];
+   <div id="screen-5" class="hidden">
+    <h2>Finale – Liebesrätsel</h2>
+    <p>Ordne die Ereignisse chronologisch:</p>
+    <select id="r5a"><option value="">–</option><option>Urlaub in Ägypten</option><option>Kuss auf dem Sofa</option><option>Minigolf-Date</option><option>Treffen in der Bar</option><option>Ferien Surfcamp</option><option>Von unserem kleinen Wunder erfahren</option></select><br>
+    <select id="r5b"><option value="">–</option><option>Urlaub in Ägypten</option><option>Kuss auf dem Sofa</option><option>Minigolf-Date</option><option>Treffen in der Bar</option><option>Ferien Surfcamp</option><option>Von unserem kleinen Wunder erfahren</option></select><br>
+    <select id="r5c"><option value="">–</option><option>Urlaub in Ägypten</option><option>Kuss auf dem Sofa</option><option>Minigolf-Date</option><option>Treffen in der Bar</option><option>Ferien Surfcamp</option><option>Von unserem kleinen Wunder erfahren</option></select><br>
+    <select id="r5d"><option value="">–</option><option>Urlaub in Ägypten</option><option>Kuss auf dem Sofa</option><option>Minigolf-Date</option><option>Treffen in der Bar</option><option>Ferien Surfcamp</option><option>Von unserem kleinen Wunder erfahren</option></select><br>
+    <select id="r5e"><option value="">–</option><option>Urlaub in Ägypten</option><option>Kuss auf dem Sofa</option><option>Minigolf-Date</option><option>Treffen in der Bar</option><option>Ferien Surfcamp</option><option>Von unserem kleinen Wunder erfahren</option></select><br>
+    <select id="r5f"><option value="">–</option><option>Urlaub in Ägypten</option><option>Kuss auf dem Sofa</option><option>Minigolf-Date</option><option>Treffen in der Bar</option><option>Ferien Surfcamp</option><option>Von unserem kleinen Wunder erfahren</option></select>
+    <div class="feedback" id="fb5"></div>
+    <button class="button" onclick="check5()">Weiter</button>
+  </div>
+   <div id="screen-end" class="hidden">
+    <h2>Herzlichen Glückwunsch 💛</h2>
+    <p>Du hast alles erkannt, erspielt und gespürt. Es gibt nichts mehr zu beweisen.</p>
+    <p>Nur noch eins zu fragen...</p>
+    <button class="button" onclick="showProposal()">Weiter</button>
+    <div id="proposal" class="hidden">
+      <h2>Wetsch du mich hürate?</h2>
+    </div>
+  </div>
 
 let current = 0;
 
@@ -173,46 +173,21 @@ function renderScreen() {
     });
     div.appendChild(list);
 
-    const input = document.createElement('input');
-    input.placeholder = 'Gib die richtige Reihenfolge als Zahlen ein (z. B. 1,2,3...)';
-    div.appendChild(input);
-    const submit = document.createElement('button');
-    submit.textContent = 'Überprüfen';
-    submit.onclick = () => {
-      const val = input.value.split(',').map(v => parseInt(v.trim()) - 1);
-      const correct = val.length === data.correctOrder.length && val.every((v, i) => v === data.correctOrder[i]);
-      const feedback = document.createElement('p');
-      feedback.textContent = correct ? data.comment : 'Fast... probier die Reihenfolge nochmal.';
-      div.appendChild(feedback);
-      if (correct) {
-        const next = document.createElement('button');
-        next.textContent = 'Weiter';
-        next.onclick = () => {
-          current++;
-          renderScreen();
-        };
-        div.appendChild(next);
+    function check5(){
+      const order = Array.from([1,2,3,4,5,6]).map(i => document.getElementById('r5'+['a','b','c','d','e','f'][i-1]).value);
+      const correct = ['Treffen in der Bar','Minigolf-Date','Kuss auf dem Sofa','Urlaub in Ägypten','Ferien Surfcamp','Von unserem kleinen Wunder erfahren'];
+      const fb = document.getElementById('fb5');
+      if (JSON.stringify(order)===JSON.stringify(correct)){
+        fb.textContent = 'Alles richtig!';
+        setTimeout(()=>{ document.getElementById('screen-5').classList.add('hidden'); showScreen('end'); }, 1000);
+      } else {
+        fb.textContent = 'Die Reihenfolge stimmt (noch) nicht – versuch’s nochmal.';
       }
-    };
-    div.appendChild(submit);
-  } else if (data.text) {
-    const p = document.createElement('p');
-    p.textContent = data.text;
-    div.appendChild(p);
-    const next = document.createElement('button');
-    next.textContent = data.final ? 'Antwort anzeigen' : 'Weiter';
-    next.onclick = () => {
-      current++;
-      renderScreen();
-    };
-    div.appendChild(next);
-  }
-
-  game.appendChild(div);
-}
-
-renderScreen();
-
+    }
+    function showProposal(){
+      document.getElementById('proposal').classList.remove('hidden');
+    }
   </script>
+
 </body>
 </html>
