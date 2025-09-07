@@ -24,9 +24,17 @@
   <script>
     const game = document.getElementById('game');
 
+    // Hilfsfunktion: Array mischen
+    function shuffle(array) {
+      return array
+        .map(value => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value);
+    }
+
     const screens = [
       {
-        text: 'Du hast heute einiges aus unserer Vergangenheit nochmals erlebt, wir haben gelacht, und uns an einiges zurück erinnert. Jetzt steht uns ein weiterer grosser Schritt bevor. Doch zuerst sollst du beweisen, wie gut du uns wirklich kennst...'
+        text: 'Du hast heute einiges aus unserer Vergangenheit wieder erlebt, wir haben gelacht, und uns an einiges zurück erinnert. Jetzt steht uns ein weiterer grosser Schritt bevor. Doch zuerst sollst du beweisen, wie gut du uns wirklich kennst...'
       },
       {
         question: 'Welche dieser Aussagen würde am ehesten in einem eurer Gespräche auftauchen?',
@@ -52,7 +60,7 @@
         pairs: {
           'Salsa': 'Tanzen',
           'Take on me': 'gemeinsam Musik machen',
-          'Klettern': 'Grigri'
+          'Grigri': 'Klettern'
         },
         comment: 'LOVE – Dinge, die wir lieben, zu zweit zu machen!'
       },
@@ -130,12 +138,16 @@
           const label = document.createElement('label');
           label.textContent = `Wozu passt "${key}"? `;
           const select = document.createElement('select');
-          Object.values(data.pairs).forEach(opt => {
+
+          const shuffledOptions = shuffle(Object.values(data.pairs));
+
+          shuffledOptions.forEach(opt => {
             const option = document.createElement('option');
             option.value = opt;
             option.textContent = opt;
             select.appendChild(option);
           });
+
           div.appendChild(label);
           div.appendChild(select);
           div.appendChild(document.createElement('br'));
@@ -180,7 +192,9 @@
           empty.textContent = "–";
           select.appendChild(empty);
 
-          data.sequence.forEach(opt => {
+          const shuffledOptions = shuffle(data.sequence);
+
+          shuffledOptions.forEach(opt => {
             const option = document.createElement('option');
             option.value = opt;
             option.textContent = opt;
@@ -236,4 +250,3 @@
   </script>
 </body>
 </html>
-
